@@ -30,13 +30,15 @@ def position_taken?(board, index)
 end
 
 def valid_move?(board, index)
-  index.between?(0,8) && !position_taken?(board, index)
+  if index.between?(0,8) && !position_taken?(board, index)
+      true
+    end
 end
 
 def turn(board)
   puts "Please enter 1-9:"
-  user_input = gets.strip
-  index = input_to_index(user_input)
+  input = gets.strip
+  index = input_to_index(input)
   if valid_move?(board, index)
     move(board, index, current_player(board))
     display_board(board)
@@ -46,7 +48,13 @@ def turn(board)
 end
 
 def turn_count(board)
-  board.count{|token| token == "X" || token == "O"}
+  turns = 0
+  board.each do |token|
+    if token == "X" || token == "O"
+      turns += 1
+    end
+  end
+  turns
 end
 
 def current_player(board)
